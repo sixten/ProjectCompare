@@ -91,6 +91,10 @@ int main(int argc, const char * argv[])
   
       // execute the desired command
       if( SFKOCommandCompare == command ) {
+        if( ![task compare:&error] ) {
+          printf("Target comparison failed: %s\n", [[error localizedDescription] UTF8String]);
+          return 1;
+        }
       }
     }
     

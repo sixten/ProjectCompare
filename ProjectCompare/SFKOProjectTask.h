@@ -33,4 +33,6 @@ NS_ENUM(NSInteger, SFKOProjectTaskErrors) {
 
 - (BOOL)verifyProject:(NSError *__autoreleasing *)error;
 
+- (BOOL)compare:(NSError *__autoreleasing *)error;
+
 @end
