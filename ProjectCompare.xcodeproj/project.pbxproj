@@ -11,6 +11,7 @@
 		9C9983E417E607F5003F78B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C9983E317E607F5003F78B3 /* Foundation.framework */; };
 		9C9983E717E607F5003F78B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C9983E617E607F5003F78B3 /* main.m */; };
 		9C9983EB17E607F5003F78B3 /* ProjectCompare.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9C9983EA17E607F5003F78B3 /* ProjectCompare.1 */; };
+		F6418E8E17E76E5F00B23FA1 /* SFKOProjectTask.m in Sources */ = {isa = PBXBuildFile; fileRef = F6418E8D17E76E5F00B23FA1 /* SFKOProjectTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		9C9983EA17E607F5003F78B3 /* ProjectCompare.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = ProjectCompare.1; sourceTree = "<group>"; };
 		BF4F9E84C7564AAFA33B42D0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3CA5DC35535415E9BADBC69 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		F6418E8C17E76E5F00B23FA1 /* SFKOProjectTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFKOProjectTask.h; sourceTree = "<group>"; };
+		F6418E8D17E76E5F00B23FA1 /* SFKOProjectTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFKOProjectTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,8 @@
 			isa = PBXGroup;
 			children = (
 				9C9983E617E607F5003F78B3 /* main.m */,
+				F6418E8C17E76E5F00B23FA1 /* SFKOProjectTask.h */,
+				F6418E8D17E76E5F00B23FA1 /* SFKOProjectTask.m */,
 				9C9983EA17E607F5003F78B3 /* ProjectCompare.1 */,
 				9C9983E817E607F5003F78B3 /* Supporting Files */,
 			);
@@ -182,6 +187,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C9983E717E607F5003F78B3 /* main.m in Sources */,
+				F6418E8E17E76E5F00B23FA1 /* SFKOProjectTask.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

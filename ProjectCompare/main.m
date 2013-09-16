@@ -6,11 +6,14 @@
 //  Copyright (c) 2013 Sixten Otto. All rights reserved.
 //
 
+#import <sysexits.h>
 #import <Foundation/Foundation.h>
 #import <FSArgumentParser/FSArgumentSignature.h>
 #import <FSArgumentParser/FSArgumentPackage.h>
 #import <FSArgumentParser/FSArgumentPackage_Private.h>
 #import <FSArgumentParser/FSArgumentParser.h>
+
+#import "SFKOProjectTask.h"
 
 typedef NS_ENUM(NSUInteger, SFKOCommands) {
   SFKOCommandHelp,
@@ -24,12 +27,12 @@ int main(int argc, const char * argv[])
     
     // set up command line arguments
     FSArgumentSignature *projectArg = [FSArgumentSignature argumentSignatureWithFormat:@"[-p --project]="];
+    FSArgumentSignature *sourceArg = [FSArgumentSignature argumentSignatureWithFormat:@"[-s --source-target]="];
+    FSArgumentSignature *destintionArg = [FSArgumentSignature argumentSignatureWithFormat:@"[-d --destination-target]="];
+    
     FSArgumentSignature *helpSubcommand = [FSArgumentSignature argumentSignatureWithFormat:@"[help]"];
     FSArgumentSignature *compareSubcommand = [FSArgumentSignature argumentSignatureWithFormat:@"[compare]"];
-    [compareSubcommand setInjectedSignatures:[NSSet setWithObjects:
-                                              [FSArgumentSignature argumentSignatureWithFormat:@"[-s --source-target]="],
-                                              [FSArgumentSignature argumentSignatureWithFormat:@"[-d --destination-target]="],
-                                              nil]];
+    [compareSubcommand setInjectedSignatures:[NSSet setWithObjects: sourceArg, destintionArg, nil]];
     NSArray *signatures = @[ projectArg, compareSubcommand, helpSubcommand ];
     
     FSArgumentParser *parser = [[FSArgumentParser alloc] initWithArguments:[[NSProcessInfo processInfo] arguments] signatures:signatures];
@@ -58,7 +61,37 @@ int main(int argc, const char * argv[])
       printf("%s\n", [[compareSubcommand descriptionForHelp:2 terminalWidth:80] UTF8String]);
       printf("%s\n", [[helpSubcommand descriptionForHelp:2 terminalWidth:80] UTF8String]);
     }
-    else if( SFKOCommandCompare == command ) {
+    else {
+      // make sure that all of the required arguments are present
+      BOOL validArguments = YES;
+      if( 1 != [arguments countOfSignature:projectArg] ) {
+        validArguments = NO;
+        printf("You must specify an Xcode project file on which to operate.\n");
+      }
+      if( 1 != [arguments countOfSignature:sourceArg] ) {
+        validArguments = NO;
+        printf("You must specify a source target for the operation.\n");
+      }
+      if( 1 != [arguments countOfSignature:destintionArg] ) {
+        validArguments = NO;
+        printf("You must specify a destnation target for the operation.\n");
+      }
+      
+      if( !validArguments ) {
+        return EX_USAGE;
+      }
+      
+      // set up the task with the input params
+      NSError *error = nil;
+      SFKOProjectTask *task = [[SFKOProjectTask alloc] initWithProjectPath:[arguments firstObjectForSignature:projectArg] sourceTarget:[arguments firstObjectForSignature:sourceArg] destinationTarget:[arguments firstObjectForSignature:destintionArg]];
+      if( ![task verifyProject:&error] ) {
+        printf("An error occurred: %s\n", [[error localizedDescription] UTF8String]);
+        return EX_DATAERR;
+      }
+  
+      // execute the desired command
+      if( SFKOCommandCompare == command ) {
+      }
     }
     
     // dump information about the command line arguments
